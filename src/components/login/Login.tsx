@@ -37,16 +37,15 @@ const LoginForm = () => {
         if(result?.error) {
             setError(result?.error)
         }
-
     }
 
     if(status === 'loading') return 'Loading...'
 
     if(status === 'authenticated') return (
-        <>
+        <div className='flex items-center gap-2'>
             <h1>{session?.user?.email}</h1>
             <Button onClick={() => signOut({redirect: false})}>Logout</Button>
-        </>
+        </div>
     )
 
     return (
