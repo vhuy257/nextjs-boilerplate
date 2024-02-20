@@ -1,4 +1,13 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) and helpfull npm packaged:
+
+- Next Auth
+- Next Translate
+- Ky
+- Tanstack Query
+- React Hook Form
+- App Router
+- TailwindCss
+- Shadcn 
 
 ## Getting Started
 

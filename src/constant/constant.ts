@@ -1,0 +1,1 @@
+export const INPUT_REQUIRED_MSG = 'This field is required';
