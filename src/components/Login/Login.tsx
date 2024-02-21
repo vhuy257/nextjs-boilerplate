@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { Button } from "@/components/ui/button"
 import { Form, FormDescription } from "@/components/ui/form"
-import InputFormField from '../input/Input'
+import InputFormField from '../Input/Input'
 import { INPUT_REQUIRED_MSG } from '@/constant/constant'
 import { signIn, signOut, useSession } from "next-auth/react"
 import { useSearchParams } from 'next/navigation'
@@ -13,7 +13,7 @@ const LoginForm = () => {
     const {data: session, status} = useSession()
     const [ loading, setLoading ] = useState(false)
     const [error, setError] = useState('')
-
+    
     const form = useForm({
         defaultValues: {
           email: null,
@@ -51,7 +51,7 @@ const LoginForm = () => {
     return (
 
         <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 mt-10">
                 <InputFormField 
                     form={form} 
                     inputName={'email'} 

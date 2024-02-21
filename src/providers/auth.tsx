@@ -6,7 +6,7 @@ type AuthProps = {
   session?: any
 }
 
-export const NextAuthProvider = ({ children, session }: AuthProps) => { 
+export const NextAuthProvider = ({ children, session }: AuthProps) => {  
   return (
     <SessionProvider session={session}>
       {children}
