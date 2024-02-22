@@ -1,33 +1,63 @@
 'use client'
 import React from 'react'
-import useGet from '@/hooks/useGetWithAuth'
+import useUser from '@/hooks/useUser'
 import {
     Card,
     CardContent,
     CardDescription,
-    CardFooter,
     CardHeader,
     CardTitle,
 } from "@/components/ui/card"
+import { useQuery } from '@tanstack/react-query'
+import { API_URL } from '@/constant/constant'
+import { useSession } from 'next-auth/react'
+import { Skeleton } from '../ui/skeleton'
 
 const ListUser = () => {
-    const { mutation } = useGet()
+    const { getUsers } = useUser()
+    const { data:session }: any = useSession()
 
-    if(mutation.isPending) return 'Loading user...'
+    const { isLoading, isPending, isSuccess, data }: any = useQuery({
+        queryKey: ['getUser'],
+        queryFn: () => getUsers(API_URL.USER),
+        enabled: !!session?.user?.accessToken
+    })
 
-    if(mutation.isSuccess) {
+    if(isPending || isLoading) return (
+        <Card className='w-[350px]'>
+            <CardHeader>
+                <CardTitle>
+                    List Users
+                </CardTitle>
+                <CardDescription>
+                    Only show when user logged in already.
+                </CardDescription>
+            </CardHeader>
+            <CardContent>
+                <Skeleton className="h-4 w-full my-4" />
+                <Skeleton className="h-4 w-full my-4" />
+                <Skeleton className="h-4 w-full my-4" />
+                <Skeleton className="h-4 w-full my-4" />
+                <Skeleton className="h-4 w-full my-4" />
+            </CardContent>
+        </Card>
+    )
+
+    if(isSuccess) {
         return (
             <>
                 <Card className="w-[350px] mt-8">
                     <CardHeader>
-                        <CardTitle>List Users</CardTitle>
-                        <CardDescription>Only show when user logged in already.</CardDescription>
+                        <CardTitle>
+                            User List
+                        </CardTitle>
+                        <CardDescription>
+                            Display content exclusively when the user has already logged in.
+                        </CardDescription>
                     </CardHeader>
                     <CardContent>
                         <ul>
-                            {mutation?.data.map((k: any, key: number) => (
-                                <li key={key}>{k.name}</li>
-                            ))}   
+                            {data.map((k: any, key: number) => <li key={key}>{k.name}</li>)}   
                         </ul>
                     </CardContent>    
                 </Card>

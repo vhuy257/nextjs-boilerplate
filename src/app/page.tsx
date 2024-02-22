@@ -1,10 +1,12 @@
-import LoginForm from "@/components/Login/Login";
+import Link from "next/link";
+import LoginForm from "@/components/LoginForm/LoginForm";
 import Image from "next/image";
 import useTranslation from "next-translate/useTranslation";
-import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import ListUser from "@/components/ListUser/ListUser";
 import ListArticles from "@/components/ListArticles/ListArticles";
+import CreateUser from "@/components/CreateUser/CreateUser";
+import UserDropdown from "@/components/UserDropdown/UserDropdown";
 
 export default function Home() {
   const { t, lang }: any = useTranslation("common");
@@ -69,10 +71,10 @@ export default function Home() {
             </Button>
           </li>
         </ul>
-        <LoginForm />    
+        <UserDropdown />
       </div>
-      
-
+      <LoginForm />    
+      <CreateUser />
       <ListUser />
       <ListArticles />
       <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">

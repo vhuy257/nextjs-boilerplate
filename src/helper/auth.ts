@@ -7,6 +7,7 @@ import { NextAuthOptions, getServerSession } from "next-auth";
 import { API_URL } from "@/constant/constant";
 import CredentialsProvider from "next-auth/providers/credentials";
 import ky from "ky";
+import { QueryClient } from "@tanstack/react-query";
 
 export const kyCustom = ky.create({ prefixUrl: API_URL.BASE_URL })
 
@@ -82,3 +83,5 @@ export function auth(
 ) {
   return getServerSession(...args, authOptions);
 }
+
+export const queryClient = new QueryClient()

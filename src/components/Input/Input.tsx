@@ -15,15 +15,15 @@ const InputFormField = ({ form, inputName, inputLabel, rules, type }: any) => {
             name={ inputName }
             rules={rules}
             render={({ field }) => (
-            <FormItem>
-                <FormLabel>
-                    {inputLabel}
-                </FormLabel>
-                <FormControl>
-                    <Input placeholder="shadcn" type={type || "text"} {...field} />
-                </FormControl>            
-                <FormMessage />
-            </FormItem>
+                <FormItem>
+                    <FormLabel>
+                        {inputLabel}
+                    </FormLabel>
+                    <FormControl>
+                        <Input placeholder="shadcn" type={type || "text"} {...field} />
+                    </FormControl>            
+                    <FormMessage />
+                </FormItem>
             )}
         />
     )
