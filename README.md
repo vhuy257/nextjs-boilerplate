@@ -7,7 +7,7 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 - React Hook Form
 - App Router
 - TailwindCss
-- Shadcn 
+- Shadcn (button, card, form, input, label, )
 
 ## Getting Started
 

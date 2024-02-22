@@ -4,11 +4,11 @@ import type {
   NextApiResponse,
 } from "next";
 import { NextAuthOptions, getServerSession } from "next-auth";
-import { API_URL, BASE_API } from "@/constant/constant";
+import { API_URL } from "@/constant/constant";
 import CredentialsProvider from "next-auth/providers/credentials";
 import ky from "ky";
 
-export const baseKy = ky.create({ prefixUrl: BASE_API });
+export const kyCustom = ky.create({ prefixUrl: API_URL.BASE_URL })
 
 export const authOptions: NextAuthOptions = {
     session: {
@@ -24,7 +24,7 @@ export const authOptions: NextAuthOptions = {
             },
             async authorize(credentials) {
                 try {
-                    const res: any = await baseKy.post(API_URL.AUTH_LOGIN, {
+                    const res: any = await kyCustom.post(API_URL.AUTH_LOGIN, {
                             json: {
                                 email: credentials?.email,
                                 password: credentials?.password,

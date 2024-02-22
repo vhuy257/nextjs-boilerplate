@@ -1,14 +1,14 @@
 'use client'
 import React from 'react'
 import { useQuery } from '@tanstack/react-query'
-import { baseKy } from '@/helper/auth'
 import { API_URL } from '@/constant/constant'
+import { kyCustom } from '@/helper/auth'
 
 const ListArticles = () => {
     const { isPending, error, data, isFetching }: any = useQuery({
         queryKey: ['articles'],
         queryFn: async () => {
-            return await baseKy.get(API_URL.ARTICLE).json()
+            return await kyCustom.get(API_URL.ARTICLE).json()
         },
         refetchOnWindowFocus: false,
     })      

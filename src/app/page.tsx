@@ -46,8 +46,8 @@ export default function Home() {
           </a>
         </div>
       </div>
-      <div className="flex items-center gap-10">
-        <ul className="flex gap-4 mt-10">
+      <div className="flex items-center gap-10 my-10">
+        <ul className="flex gap-4">
           <li>
             <Button
               className={lang === "en" ? "bg-red-600 text-white" : ""}

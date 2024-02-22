@@ -1,24 +1,16 @@
 import { useEffect } from "react";
-import { useSession } from "next-auth/react";
 import { useMutation } from "@tanstack/react-query";
 import { API_URL } from "@/constant/constant";
-import { baseKy } from "@/helper/auth";
+import useKyAuth from "./useKyAuth";
+import { useSession } from "next-auth/react";
 
 export default function useGet() {
-    const { data, status }: any = useSession()
+    const { status } = useSession()
+    const { kyAuth } = useKyAuth()
 
     const mutation: any = useMutation({
         mutationFn: async (url: string) => {
-            const res = await baseKy.extend({
-                hooks: {
-                    beforeRequest: [
-                        request => {
-                            request.headers.set('Authorization', 'Bearer ' + data?.user?.accessToken);
-                        }
-                    ]
-                }
-            }).get(url).json();
-            
+            const res = await kyAuth.get(url).json();
             return res;
         }
     })
@@ -27,7 +19,7 @@ export default function useGet() {
         if(status === 'authenticated') {
             mutation.mutate(API_URL.LIST_USER);
         }
-    }, [status, data])
+    }, [status])
 
     return {
         mutation,

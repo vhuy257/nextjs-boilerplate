@@ -1,6 +1,14 @@
 'use client'
 import React from 'react'
 import useGet from '@/hooks/useGetWithAuth'
+import {
+    Card,
+    CardContent,
+    CardDescription,
+    CardFooter,
+    CardHeader,
+    CardTitle,
+} from "@/components/ui/card"
 
 const ListUser = () => {
     const { mutation } = useGet()
@@ -10,13 +18,19 @@ const ListUser = () => {
     if(mutation.isSuccess) {
         return (
             <>
-                <h1>List User</h1>   
-                <h4>This component only load when user was signed in</h4>  
-                <ul>
-                    {mutation?.data.map((k: any, key: number) => (
-                        <li key={key}>{k.name}</li>
-                    ))}   
-                </ul>
+                <Card className="w-[350px] mt-8">
+                    <CardHeader>
+                        <CardTitle>List Users</CardTitle>
+                        <CardDescription>Only show when user logged in already.</CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                        <ul>
+                            {mutation?.data.map((k: any, key: number) => (
+                                <li key={key}>{k.name}</li>
+                            ))}   
+                        </ul>
+                    </CardContent>    
+                </Card>
             </>
         )
     }
