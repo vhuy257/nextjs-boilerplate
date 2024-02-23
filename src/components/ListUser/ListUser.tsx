@@ -8,13 +8,14 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card"
-import { useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
 import { API_URL } from '@/constant/constant'
 import { useSession } from 'next-auth/react'
 import { Skeleton } from '../ui/skeleton'
+import { Button } from '../ui/button'
 
 const ListUser = () => {
-    const { getUsers } = useUser()
+    const { getUsers, deleteUser } = useUser()
     const { data:session }: any = useSession()
 
     const { isLoading, isPending, isSuccess, data }: any = useQuery({
@@ -24,7 +25,7 @@ const ListUser = () => {
     })
 
     if(isPending || isLoading) return (
-        <Card className='w-[350px]'>
+        <Card className='w-[350px] mt-8'>
             <CardHeader>
                 <CardTitle>
                     List Users
@@ -46,7 +47,7 @@ const ListUser = () => {
     if(isSuccess) {
         return (
             <>
-                <Card className="w-[350px] mt-8">
+                <Card className="w-[450px] mt-8">
                     <CardHeader>
                         <CardTitle>
                             User List
@@ -56,8 +57,18 @@ const ListUser = () => {
                         </CardDescription>
                     </CardHeader>
                     <CardContent>
-                        <ul>
-                            {data.map((k: any, key: number) => <li key={key}>{k.name}</li>)}   
+                        <ul className='space-y-4'>
+                            {data.map((k: any, key: number) => (
+                                <li key={key}>
+                                    {k.name}
+                                    <Button 
+                                        variant={'link'} 
+                                        className="ml-4 text-xs" 
+                                        onClick={() => deleteUser.mutate({url: `${API_URL.USER}/${k.id}`})}>
+                                        {deleteUser.isPending ? 'Deleting...' : 'Remove'}
+                                    </Button>
+                                </li>
+                            ))}   
                         </ul>
                     </CardContent>    
                 </Card>

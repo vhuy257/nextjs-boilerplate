@@ -13,7 +13,11 @@ const ListArticles = () => {
         refetchOnWindowFocus: false,
     })      
     
-    if (isPending) return 'Loading...'
+    if (isPending) return (
+        <div className="mt-8">
+            Loading...
+        </div>
+    )
     
     if (isFetching) return 'Fetching...'
 

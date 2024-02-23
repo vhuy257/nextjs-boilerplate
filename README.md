@@ -8,6 +8,7 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 - App Router
 - TailwindCss
 - Shadcn (button, card, form, input, label, )
+- Zustand
 
 ## Getting Started
 

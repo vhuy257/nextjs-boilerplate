@@ -10,7 +10,7 @@ interface User {
 
 export default function useUser() {
     const { kyAuth } = useKyAuth()
-
+    
     //Create new user
     const createUser = useMutation({
         mutationKey: ['createUser'],
@@ -37,8 +37,25 @@ export default function useUser() {
         return res;
     }
 
+    //Delete user
+    const deleteUser = useMutation({
+        mutationKey: ['deleteUser'],
+        mutationFn: async ({ url }: { url: string }) => {
+            return await kyAuth.delete(url)
+        },
+        onSuccess: (result, variables, context: any) => {
+            queryClient.invalidateQueries(
+                {
+                  queryKey: ['getUser'],
+                  refetchType: 'active',
+                },
+            )
+        }
+    })
+
     return {
         createUser,
-        getUsers
+        getUsers,
+        deleteUser,
     }
 }

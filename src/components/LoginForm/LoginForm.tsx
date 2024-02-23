@@ -10,19 +10,19 @@ import { useSearchParams } from 'next/navigation'
 import { Loader2 } from "lucide-react"
 import {
     Dialog,
-    DialogContent,
+    DialogContent,   
     DialogHeader,
-    DialogTitle,
-    DialogTrigger,
+    DialogTitle
 } from "@/components/ui/dialog"
-import { signal } from "@preact/signals";
+import { useDiaglog } from '@/zustand/useDialog'
 
 const LoginForm = () => {    
     const [ loading, setLoading ] = useState(false)
-    const [error, setError] = useState('')
-    
-    const [ open, setOpen ] = useState(false)
+    const [ error, setError ] = useState('')  
 
+    const open = useDiaglog((state: any) => state.open)
+    const setOpen = useDiaglog((state: any) => state.setOpen)
+    
     const form = useForm({
         defaultValues: {
           email: null,
@@ -42,20 +42,25 @@ const LoginForm = () => {
         })
         
         setLoading(false)
-
+        setOpen()
+        
         if(result?.error) {
             setError(result?.error)
         }
     }    
 
     return (
+        <>
         <Dialog 
-            open={open} 
-            onOpenChange={() => { setOpen(!open) }}
+            open={open}
+            onOpenChange={setOpen}
         >            
             <DialogContent>                
+                <DialogHeader>                    
+                    <DialogTitle>Login</DialogTitle>                    
+                </DialogHeader>
                 <Form {...form}>
-                    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 mt-10">
+                    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 mt-4">
                         <InputFormField 
                             form={form} 
                             inputName={'email'} 
@@ -82,6 +87,7 @@ const LoginForm = () => {
                 </Form>
             </DialogContent>
         </Dialog>
+        </>
     )
 }
 

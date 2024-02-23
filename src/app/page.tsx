@@ -73,7 +73,7 @@ export default function Home() {
         </ul>
         <UserDropdown />
       </div>
-      <LoginForm />    
+      <LoginForm />
       <CreateUser />
       <ListUser />
       <ListArticles />

@@ -3,9 +3,11 @@ import React from 'react'
 import { Button } from '../ui/button'
 import { signOut } from 'next-auth/react'
 import { useSession } from 'next-auth/react'
+import { useDiaglog } from '@/zustand/useDialog'
 
 const UserDropdown = () => {
-    const {data: session, status} = useSession()
+    const { data: session, status } = useSession()
+    const setOpen = useDiaglog((state: any) => state.setOpen)
 
     if(status === 'loading') return 'Loading...'
 
@@ -17,7 +19,7 @@ const UserDropdown = () => {
     )
 
     return (
-        <Button variant={'default'}>Login</Button>
+        <Button variant={'default'} onClick={setOpen}>Login</Button>
     )
 }
 
