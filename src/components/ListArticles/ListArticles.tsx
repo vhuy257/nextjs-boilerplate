@@ -3,6 +3,9 @@ import React from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { API_URL } from '@/constant/constant'
 import { kyCustom } from '@/helper/auth'
+import { Skeleton } from '../ui/skeleton'
+import DataTable from '../DataTable/DataTable'
+import { columns } from '../Columns/Columns'
 
 const ListArticles = () => {
     const { isPending, error, data, isFetching }: any = useQuery({
@@ -13,32 +16,24 @@ const ListArticles = () => {
         refetchOnWindowFocus: false,
     })      
     
-    if (isPending) return (
+    if (isPending || isFetching) return (
         <div className="mt-8">
-            Loading...
+            <ul className="flex flex-col gap-8">
+                {Array.from({length: 5}).map((k: any, key: number) => (
+                    <li key={key}>
+                        <Skeleton className="w-[450px] h-8"/>
+                    </li>
+                ))}
+            </ul>
         </div>
     )
     
-    if (isFetching) return 'Fetching...'
-
     if (error) return 'An error has occurred: ' + error.message
 
     return (
-        <ul>
-            {
-                data?.map((k: any, key: number) => {
-                    const { title, description, body, publish } = k;
-                    return (
-                        <li key={key} className="my-8">
-                            title: {title} <br />
-                            description: { description } <br />
-                            body: { body } <br />
-                            publish: { publish ? 'true' : 'false' }
-                        </li>
-                    )
-                }) 
-            }
-        </ul>
+        <div className="w-[760px] my-10">
+            <DataTable columns={columns} data={data} />
+        </div>
     )
 }
 

@@ -4,12 +4,15 @@ import { Button } from '../ui/button'
 import { signOut } from 'next-auth/react'
 import { useSession } from 'next-auth/react'
 import { useDiaglog } from '@/zustand/useDialog'
+import { Skeleton } from '../ui/skeleton'
 
 const UserDropdown = () => {
     const { data: session, status } = useSession()
     const setOpen = useDiaglog((state: any) => state.setOpen)
 
-    if(status === 'loading') return 'Loading...'
+    if(status === 'loading') return (
+        <Skeleton className="h-8 w-60" />
+    )
 
     if(status === 'authenticated') return (
         <div className='flex items-center gap-2'>
@@ -19,7 +22,7 @@ const UserDropdown = () => {
     )
 
     return (
-        <Button variant={'default'} onClick={setOpen}>Login</Button>
+        <Button variant={'default'} onClick={setOpen} className="login-dropdown">Login</Button>
     )
 }
 
