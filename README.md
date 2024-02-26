@@ -9,6 +9,9 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 - TailwindCss
 - Shadcn (button, card, form, input, label, )
 - Zustand
+- React Icons
+- Simple CRUD (Articles, User)
+- Credential Login/Logout with Next Auth
 
 ## Getting Started
 
