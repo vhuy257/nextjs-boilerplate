@@ -44,7 +44,8 @@ export const columns: ColumnDef<Article>[] = [
         accessorKey: "id",
         header: ({ column }) => (
             <DataTableColumnHeader column={column} title="Id" />
-        )        
+        ), 
+        cell: ({ row }) => ( <span>{ row.index + 1 }</span> )
     },
     {
         accessorKey: "title",
@@ -69,6 +70,6 @@ export const columns: ColumnDef<Article>[] = [
     },
     {
         header: "Action",
-        cell:  ({ row }) => <DataTableRowActions row={row} />
+        cell:  ({ row, table }) => <DataTableRowActions row={row} table={table}/>
     }
 ]

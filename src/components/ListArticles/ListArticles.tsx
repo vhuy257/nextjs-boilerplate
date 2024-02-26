@@ -32,7 +32,7 @@ const ListArticles = () => {
 
     return (
         <div className="w-[1060px] my-10">
-            <DataTable columns={columns} data={data} />
+            <DataTable columns={columns} data={data} searchKey='title'/>
         </div>
     )
 }

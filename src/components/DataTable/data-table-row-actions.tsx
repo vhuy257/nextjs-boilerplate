@@ -1,7 +1,7 @@
 "use client"
 
 import { DotsHorizontalIcon } from "@radix-ui/react-icons"
-import { Row } from "@tanstack/react-table"
+import { Row, Table } from "@tanstack/react-table"
 
 import { Button } from "../ui/button"
 import {
@@ -23,13 +23,16 @@ import { taskSchema } from "./data/schema"
 
 interface DataTableRowActionsProps<TData> {
   row: Row<TData>
+  table: Table<TData>
 }
 
 export function DataTableRowActions<TData>({
   row,
+  table
 }: DataTableRowActionsProps<TData>) {
   //const task = taskSchema.parse(row.original)
-    const task = row.original
+    const task: any = row.original
+    const meta: any = table?.options?.meta;
 
     return (
         <DropdownMenu>
@@ -47,7 +50,10 @@ export function DataTableRowActions<TData>({
             <DropdownMenuItem>Make a copy</DropdownMenuItem>
             <DropdownMenuItem>Favorite</DropdownMenuItem>
             <DropdownMenuSeparator />            
-            <DropdownMenuItem>
+            <DropdownMenuItem onClick={() => {
+              const id: string = task?.id.toString();
+              meta.removeRow(id)
+            }}>
                 Delete
             <DropdownMenuShortcut>⌘⌫</DropdownMenuShortcut>
             </DropdownMenuItem>

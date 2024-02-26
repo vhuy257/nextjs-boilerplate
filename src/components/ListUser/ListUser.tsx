@@ -15,6 +15,7 @@ import { Skeleton } from '../ui/skeleton'
 import DataTable from '../DataTable/data-table'
 import { ColumnDef } from '@tanstack/react-table'
 import { DataTableRowActions } from '../DataTable/data-table-row-actions'
+import { DataTableColumnHeader } from '../DataTable/data-table-row-header'
 
 interface User {
     id: string
@@ -25,19 +26,24 @@ interface User {
 const columns: ColumnDef<User>[] = [
     {
         accessorKey: "id",
-        header: "ID",
+        header: "Id",
+        cell: ({row}) => row.index + 1
     },
     {
         accessorKey: "name",
-        header: "Name",
+        header: ({ column }) => (
+            <DataTableColumnHeader column={column} title="Name" />
+        ), 
     },
     {
         accessorKey: "email",
-        header: "Email",
+        header: ({ column }) => (
+            <DataTableColumnHeader column={column} title="Id" />
+        ), 
     },
     {
         header: "Action",
-        cell:  ({ row }) => <DataTableRowActions row={row} />
+        cell:  ({ row, table }) => <DataTableRowActions row={row} table={table}/>
     }
 ]
 
@@ -85,7 +91,7 @@ const ListUser = () => {
             <div className="w-[750px] mt-8">
                 <DataTable columns={columns} data={data} meta={{
                     removeRow
-                }}/>
+                }} searchKey='name'/>
             </div>
         )
     }
