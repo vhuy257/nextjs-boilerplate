@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query'
 import { API_URL } from '@/constant/constant'
 import { kyCustom } from '@/helper/auth'
 import { Skeleton } from '../ui/skeleton'
-import DataTable from '../DataTable/DataTable'
+import DataTable from '../DataTable/data-table'
 import { columns } from '../Columns/Columns'
 
 const ListArticles = () => {
@@ -31,7 +31,7 @@ const ListArticles = () => {
     if (error) return 'An error has occurred: ' + error.message
 
     return (
-        <div className="w-[760px] my-10">
+        <div className="w-[1060px] my-10">
             <DataTable columns={columns} data={data} />
         </div>
     )

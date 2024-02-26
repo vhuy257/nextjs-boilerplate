@@ -12,9 +12,9 @@ import { useQuery } from '@tanstack/react-query'
 import { API_URL } from '@/constant/constant'
 import { useSession } from 'next-auth/react'
 import { Skeleton } from '../ui/skeleton'
-import DataTable from '../DataTable/DataTable'
+import DataTable from '../DataTable/data-table'
 import { ColumnDef } from '@tanstack/react-table'
-import { Button } from '../ui/button'
+import { DataTableRowActions } from '../DataTable/data-table-row-actions'
 
 interface User {
     id: string
@@ -37,13 +37,7 @@ const columns: ColumnDef<User>[] = [
     },
     {
         header: "Action",
-        cell:  ({ row }: any) => (
-            <div className="flex items-center space-x-2">
-                <Button onClick={() => {
-                    console.log('test')
-                }}>Remove</Button>
-            </div>
-        )
+        cell:  ({ row }) => <DataTableRowActions row={row} />
     }
 ]
 
@@ -56,6 +50,11 @@ const ListUser = () => {
         queryFn: () => getUsers(API_URL.USER),
         enabled: !!session?.user?.accessToken
     })
+
+    const removeRow = (id: string) => {
+        const url = `${API_URL.USER}/${id}`
+        deleteUser.mutate({ url })
+    }
 
     const cardHeader = (
         <CardHeader>
@@ -84,7 +83,9 @@ const ListUser = () => {
     if(isSuccess) {
         return (
             <div className="w-[750px] mt-8">
-                <DataTable columns={columns} data={data} />
+                <DataTable columns={columns} data={data} meta={{
+                    removeRow
+                }}/>
             </div>
         )
     }

@@ -2,11 +2,15 @@
 import { Checkbox } from "@/components/ui/checkbox"
 import { ColumnDef } from "@tanstack/react-table"
 import { Switch } from "../ui/switch"
+import { DataTableColumnHeader } from "../DataTable/data-table-row-header"
+import { DataTableRowActions } from "../DataTable/data-table-row-actions"
 
 export type Article = {
   id: number
   title: number
   description: string
+  name: string
+  email: string
 }
 
 export const columns: ColumnDef<Article>[] = [
@@ -38,23 +42,33 @@ export const columns: ColumnDef<Article>[] = [
     },
     {
         accessorKey: "id",
-        header: "ID",
+        header: ({ column }) => (
+            <DataTableColumnHeader column={column} title="Id" />
+        )        
     },
     {
         accessorKey: "title",
-        header: "Title",
+        header: ({ column }) => (
+            <DataTableColumnHeader column={column} title="Title" />
+        )       
     },
     {
         accessorKey: "description",
-        header: "Description",
+        header: ({ column }) => (
+            <DataTableColumnHeader column={column} title="Description" />
+        )       
     },  
     {
         id: "published",
         header: "Published",
         cell: ({ row }) => (
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center space-x-2 pointer-events-none">
                 <Switch id="airplane-mode" checked={row?.getValue("published")}/>
             </div>
         )
     },
+    {
+        header: "Action",
+        cell:  ({ row }) => <DataTableRowActions row={row} />
+    }
 ]
