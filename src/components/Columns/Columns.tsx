@@ -11,6 +11,7 @@ export type Article = {
   description: string
   name: string
   email: string
+  published: boolean
 }
 
 export const columns: ColumnDef<Article>[] = [
@@ -62,11 +63,13 @@ export const columns: ColumnDef<Article>[] = [
     {
         id: "published",
         header: "Published",
-        cell: ({ row }) => (
-            <div className="flex items-center space-x-2 pointer-events-none">
-                <Switch id="airplane-mode" checked={row?.getValue("published")}/>
-            </div>
-        )
+        cell: ({ row }) => {
+            return (            
+                <div className="flex items-center space-x-2 pointer-events-none">
+                    <Switch id="airplane-mode" checked={row?.original?.published}/>
+                </div>
+            )
+        }
     },
     {
         header: "Action",

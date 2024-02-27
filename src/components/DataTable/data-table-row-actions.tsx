@@ -51,6 +51,7 @@ export function DataTableRowActions<TData>({
             <DropdownMenuItem>Favorite</DropdownMenuItem>
             <DropdownMenuSeparator />            
             <DropdownMenuItem onClick={() => {
+              console.log(meta, 'meta')
               const id: string = task?.id.toString();
               meta.removeRow(id)
             }}>

@@ -51,9 +51,9 @@ const ListUser = () => {
     const { getUsers, deleteUser } = useUser()
     const { data:session }: any = useSession()
 
-    const { isLoading, isPending, isSuccess, data }: any = useQuery({
+    const { isLoading, isPending, isError, error, data }: any = useQuery({
         queryKey: ['getUser'],
-        queryFn: () => getUsers(API_URL.USER),
+        queryFn: () => getUsers(API_URL.USER+'`'),
         enabled: !!session?.user?.accessToken
     })
 
@@ -73,7 +73,7 @@ const ListUser = () => {
         </CardHeader>
     )
 
-    if(isPending || isLoading) return (
+    if(isLoading) return (
         <Card className='w-[750px] mt-8'>
             {cardHeader}
             <CardContent>
@@ -85,16 +85,16 @@ const ListUser = () => {
             </CardContent>
         </Card>
     )
+    
+    if (isError) return 'An error has occurred: ' + error.message
 
-    if(isSuccess) {
-        return (
-            <div className="w-[750px] mt-8">
-                <DataTable columns={columns} data={data} meta={{
-                    removeRow
-                }} searchKey='name'/>
-            </div>
-        )
-    }
+    return (
+        <div className="w-[750px] mt-8">
+            <DataTable columns={columns} data={data} meta={{
+                removeRow
+            }} searchKey='name'/>
+        </div>
+    )
 }
 
 export default ListUser

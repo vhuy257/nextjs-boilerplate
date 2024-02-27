@@ -1,14 +1,14 @@
 'use client'
 import React from 'react'
-import { useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
 import { API_URL } from '@/constant/constant'
-import { kyCustom } from '@/helper/auth'
+import { kyCustom, queryClient } from '@/helper/auth'
 import { Skeleton } from '../ui/skeleton'
 import DataTable from '../DataTable/data-table'
 import { columns } from '../Columns/Columns'
 
 const ListArticles = () => {
-    const { isPending, error, data, isFetching }: any = useQuery({
+    const { isPending, isError, error, data, isFetching }: any = useQuery({
         queryKey: ['articles'],
         queryFn: async () => {
             return await kyCustom.get(API_URL.ARTICLE).json()
@@ -16,23 +16,38 @@ const ListArticles = () => {
         refetchOnWindowFocus: false,
     })      
     
-    if (isPending || isFetching) return (
-        <div className="mt-8">
-            <ul className="flex flex-col gap-8">
-                {Array.from({length: 5}).map((k: any, key: number) => (
-                    <li key={key}>
-                        <Skeleton className="w-[450px] h-8"/>
-                    </li>
-                ))}
-            </ul>
+    const mutation  = useMutation({
+        mutationKey: ['articlesRemove'],
+        mutationFn: async({ url }: { url: string }) => {
+            const res = await kyCustom.delete(url);
+            return res;
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries(
+                {
+                  queryKey: ['articles'],
+                  refetchType: 'active',
+                },
+            )
+        }
+    })
+
+    const removeRow = (id: string) => {
+        const url = `${API_URL.ARTICLE}/${id}`
+        mutation.mutate({ url })
+    }
+
+    if (isFetching || isPending || mutation.isPending) return (
+        <div className='w-[1060px] my-10'>
+            <Skeleton className="min-h-[380px]" />
         </div>
-    )
+    )    
     
-    if (error) return 'An error has occurred: ' + error.message
+    if (isError) return 'An error has occurred: ' + error.message
 
     return (
-        <div className="w-[1060px] my-10">
-            <DataTable columns={columns} data={data} searchKey='title'/>
+        <div className="w-[1060px] my-10">            
+            <DataTable columns={columns} data={data} searchKey='title' meta={{removeRow}}/>
         </div>
     )
 }

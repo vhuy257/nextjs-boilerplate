@@ -8,7 +8,16 @@ import {
     FormMessage,
 } from "@/components/ui/form"
 
-const InputFormField = ({ form, inputName, inputLabel, rules, type }: any) => {
+interface FormProps {
+    form: any
+    inputName: string
+    rules: any
+    inputLabel: string
+    type?: string
+    placeholder?: string
+}
+
+const InputFormField = ({ form, inputName, inputLabel, rules, type, placeholder }: FormProps) => {
     return (
         <FormField
             control={form.control}
@@ -20,7 +29,7 @@ const InputFormField = ({ form, inputName, inputLabel, rules, type }: any) => {
                         {inputLabel}
                     </FormLabel>
                     <FormControl>
-                        <Input placeholder="shadcn" type={type || "text"} {...field} />
+                        <Input placeholder={placeholder ?? ""} type={type || "text"} {...field} />
                     </FormControl>            
                     <FormMessage />
                 </FormItem>

@@ -1,15 +1,7 @@
 import React from "react";
 import {
-    ColumnDef,
-    ColumnFiltersState,
-    SortingState,
-    VisibilityState,
+    ColumnDef,    
     flexRender,
-    getCoreRowModel,
-    getFilteredRowModel,
-    getPaginationRowModel,
-    getSortedRowModel,
-    useReactTable,
 } from "@tanstack/react-table";
 
 import {
@@ -22,6 +14,9 @@ import {
 } from "@/components/ui/table";
 import { DataTablePagination } from "./data-table-pagination";
 import { DataTableToolbar } from "./data-table-toolbar";
+import useDataTable from "@/hooks/useDataTable";
+import CreateArticle from "../CreateArticle/CreateArticle";
+import DeleteArticles from "../DeleteArticles/DeleteArticles";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -36,38 +31,16 @@ export function DataTable<TData, TValue>({
   meta,
   searchKey,
 }: DataTableProps<TData, TValue>) {
-  const [sorting, setSorting] = React.useState<SortingState>([]);
-  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
-    []
-  );
-  const [columnVisibility, setColumnVisibility] =
-    React.useState<VisibilityState>({});
-  const [rowSelection, setRowSelection] = React.useState({});
-
-  const table = useReactTable({
-    data,
-    columns,
-    onSortingChange: setSorting,
-    onColumnFiltersChange: setColumnFilters,
-    getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
-    getSortedRowModel: getSortedRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
-    onColumnVisibilityChange: setColumnVisibility,
-    onRowSelectionChange: setRowSelection,
-    state: {
-      sorting,
-      columnFilters,
-      columnVisibility,
-      rowSelection,      
-    },
-    meta: meta
-  });
+  const { table } = useDataTable({columns, data, meta});
 
   return (
     <div className="w-full">
+      <div className="flex justify-center gap-4 mb-5">
+          <CreateArticle />        
+          <DeleteArticles table={table}/>    
+      </div>
       <div className="flex items-center py-4">
-      <DataTableToolbar table={table} searchKey={searchKey}/>
+        <DataTableToolbar table={table} searchKey={searchKey}/>
       </div>
       <div className="rounded-md border">
         <Table>
