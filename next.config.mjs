@@ -1,7 +1,9 @@
 /** @type {import('next').NextConfig} */
-const nextTranslate = require("next-translate-plugin");
+import createNextIntlPlugin from 'next-intl/plugin';
 
-const nextConfig = nextTranslate({
+const withNextIntl = createNextIntlPlugin();
+
+const nextConfig = {
     webpack: (config, { isServer, webpack }) => {
         return config;
     },    
@@ -9,6 +11,6 @@ const nextConfig = nextTranslate({
         NEXTAUTH_URL: "http://localhost:4000",
         NEXTAUTH_SECRET: "kkowHC0+WwAEvsQr7NKRBwdKvAKMUIMjmWPDYWjOe4w="
     }    
-});
+}
 
-module.exports = nextConfig;
+export default withNextIntl(nextConfig);

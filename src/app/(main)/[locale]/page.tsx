@@ -1,16 +1,19 @@
 import Link from "next/link";
 import LoginForm from "@/components/LoginForm/LoginForm";
 import Image from "next/image";
-import useTranslation from "next-translate/useTranslation";
+import { useLocale, useTranslations } from "next-intl"
 import { Button } from "@/components/ui/button";
-//import ListUser from "@/components/ListUser/ListUser";
 import ListArticles from "@/components/ListArticles/ListArticles";
-//import CreateUser from "@/components/CreateUser/CreateUser";
 import UserDropdown from "@/components/UserDropdown/UserDropdown";
 
 export default function Home() {
-  const { lang } = useTranslation()
+  const locale = useLocale()
+  const t = useTranslations("Index")
 
+  const translate = {
+    title: t("title")
+  }
+  
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">      
       <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">        
@@ -47,19 +50,17 @@ export default function Home() {
         <ul className="flex gap-4 items-center">
           <li>
             <Button
-              className={lang === "en" ? "bg-red-600 text-white" : ""}
-              size={'sm'}
+              className={locale === "en" ? "bg-red-600 text-white" : ""}
               asChild
             >
-              <Link href="/?lang=en" as="/en">
+              <Link href="/?lang=en" as="/en" className={locale === "en" ? "bg-red-600 text-white" : ""}>
                 English
               </Link>
             </Button>
           </li>
           <li>
             <Button
-              className={lang === "vi" ? "bg-red-600 text-white" : ""}
-              size={'sm'}
+              className={locale === "vi" ? "bg-red-600 text-white" : ""}
               asChild
             >
               <Link href="/?lang=vi" as="/vi">
@@ -68,7 +69,7 @@ export default function Home() {
             </Button>
           </li>
         </ul>
-        <UserDropdown />
+        <UserDropdown {...translate}/>
       </div>
       <LoginForm />     
       <div>

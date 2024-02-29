@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import "./globals.css";
-import { NextAuthProvider } from "../providers/auth";
-import { QueryProvider } from "../providers/query";
+import { NextAuthProvider } from "../../../providers/auth";
+import { QueryProvider } from "../../../providers/query";
 import Layout from "@/components/Layout/Layout";
+
+import "@/app/globals.css";
+import I18nProvider from "@/providers/i18n";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -14,17 +16,21 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
+  params: { locale }
 }: Readonly<{
   children: React.ReactNode;
+  params: { locale: string}
 }>) {
   return (
-    <html lang="en">
+    <html lang={locale}>
       <body className={inter.className}>
         <NextAuthProvider>
           <QueryProvider>
-            <Layout>
-              {children}
-            </Layout>
+            <I18nProvider locale={locale}>
+              <Layout>
+                {children}
+              </Layout>
+            </I18nProvider>
           </QueryProvider>
         </NextAuthProvider>
       </body>
