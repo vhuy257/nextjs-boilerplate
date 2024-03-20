@@ -51,9 +51,11 @@ export default function Home() {
           <li>
             <Button
               className={locale === "en" ? "bg-red-600 text-white" : ""}
+              variant={'default'}
+              size={'sm'}
               asChild
             >
-              <Link href="/?lang=en" as="/en" className={locale === "en" ? "bg-red-600 text-white" : ""}>
+              <Link href="/?lang=en" as="/en" className="block">
                 English
               </Link>
             </Button>
@@ -61,9 +63,11 @@ export default function Home() {
           <li>
             <Button
               className={locale === "vi" ? "bg-red-600 text-white" : ""}
+              variant={'default'}
+              size={'sm'}
               asChild
             >
-              <Link href="/?lang=vi" as="/vi">
+              <Link href="/?lang=vi" as="/vi" className="block">
                 Vietnamese
               </Link>
             </Button>

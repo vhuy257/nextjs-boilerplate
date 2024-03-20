@@ -17,7 +17,15 @@ const UserDropdown = ({ title }: any) => {
     if(status === 'authenticated') return (
         <div className='flex items-center gap-2 text-sm'>
             <h1>{title}, {session?.user?.email}</h1>
-            <Button variant={'outline'} onClick={() => signOut({redirect: false})} size={'sm'} className='h-8'>Logout</Button>
+            <Button 
+                variant={'outline'} 
+                onClick={() => signOut({
+                    redirect: false
+                })} 
+                size={'sm'} 
+                className="h-8"
+            >Logout
+            </Button>
         </div>
     )
 

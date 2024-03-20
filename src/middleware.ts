@@ -3,7 +3,7 @@ import createIntlMiddleware from 'next-intl/middleware';
 import {withAuth} from 'next-auth/middleware';
 
 const locales = ['en', 'vi'];
-const publicPages = ['/login'];
+const publicPages = ['/'];
 
 const intlMiddleware = createIntlMiddleware({
   locales,
@@ -23,7 +23,7 @@ const authMiddleware = withAuth(
       authorized: ({token}) => token != null
     },
     pages: {
-      signIn: '/login'
+      signIn: '/'
     }
   }
 )
